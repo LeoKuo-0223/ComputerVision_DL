@@ -34,7 +34,7 @@ class Main(QMainWindow, ui.Ui_MainWindow):
         self.pushButton_3.clicked.connect(self.Show_test)
         self.pushButton_4.clicked.connect(self.Compare)
         
-        self.DATASET_PATH  = 'sample' # 資料路徑
+        # self.DATASET_PATH  = 'sample' # 資料路徑
         self.IMAGE_SIZE = (224, 224) # 影像大小
         self.NUM_CLASSES = 2 # 影像類別數
         self.BATCH_SIZE = 80

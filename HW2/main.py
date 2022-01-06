@@ -30,38 +30,37 @@ class Main(QMainWindow, ui.Ui_MainWindow):
         # termination criteria
         criteria = (cv.TERM_CRITERIA_EPS + cv.TERM_CRITERIA_MAX_ITER, 30, 0.001)
         # prepare object points, like (0,0,0), (1,0,0), (2,0,0) ....,(6,5,0)
-        w = 8
-        h = 11
-        objp=np.zeros((w*h, 3), np.float32)
-        objp[:, :2]=np.mgrid[0:w, 0:h].T.reshape(-1, 2)
+        objp=np.zeros((8*11, 3), np.float32)
+        objp[:, :2]=np.mgrid[0:8, 0:11].T.reshape(-1, 2)
         # Arrays to store object points and image points from all the images.
         objpoints = [] # 3d point in real world space
         imgpoints = [] # 2d points in image plane.
         images = glob.glob('*.bmp')
         for fname in images:
+            
             img = cv.imread(fname)
-            img_resize = cv.resize(img, (1000, 1000), interpolation=cv.INTER_AREA)
+            img_resize = cv.resize(img, (1300, 1300), interpolation=cv.INTER_AREA)
             gray = cv.cvtColor(img_resize, cv.COLOR_BGR2GRAY)
             
             # Find the chess board corners
-            ret, corners=cv.findChessboardCorners(gray, (w,h), None)
+            ret, corners=cv.findChessboardCorners(gray, (8,11), None)
             # If found, add object points, image points (after refining them)
             if ret == True:
-                objpoints.append(objp)
+                # print(fname)
                 corners2 = cv.cornerSubPix(gray,corners, (11,11), (-1,-1), criteria)
+                objpoints.append(objp)
                 imgpoints.append(corners)
+                corners2 = cv.cornerSubPix(gray,corners, (11,11), (-1,-1), criteria)
                 # Draw and display the corners
-                cv.drawChessboardCorners(img_resize, (11,8), corners2, ret)
-                cv.imshow('img', img_resize)
-                cv.waitKey(500)
+            cv.drawChessboardCorners(img_resize, (8,11), corners2, ret)
+            cv.imshow('img', img_resize)
+            cv.waitKey(500)
         cv.destroyAllWindows()
     
     def Intrinsic(self):
         criteria = (cv.TERM_CRITERIA_EPS + cv.TERM_CRITERIA_MAX_ITER, 30, 0.001)
-        w = 8
-        h = 11
-        objp=np.zeros((w*h, 3), np.float32)
-        objp[:, :2]=np.mgrid[0:w, 0:h].T.reshape(-1, 2)
+        objp=np.zeros((8*11, 3), np.float32)
+        objp[:, :2]=np.mgrid[0:8, 0:11].T.reshape(-1, 2)
         #store the world coord. and image coord. points
         objpoints=[]
         imgpoints=[]
@@ -72,7 +71,7 @@ class Main(QMainWindow, ui.Ui_MainWindow):
             img=cv.imread(fname)
             gray=cv.cvtColor(img, cv.COLOR_BGR2GRAY)
             #find the corner of checkboard
-            ret, corners=cv.findChessboardCorners(gray, (w,h), None)
+            ret, corners=cv.findChessboardCorners(gray, (8,11), None)
             #save the points as long as find enough pair points
             if ret==True:
                 cv.cornerSubPix(gray,corners,(11,11),(-1,-1),criteria)
@@ -89,10 +88,9 @@ class Main(QMainWindow, ui.Ui_MainWindow):
         index = self.lineEdit.text()
         index = int(index)
         criteria = (cv.TERM_CRITERIA_EPS + cv.TERM_CRITERIA_MAX_ITER, 30, 0.001)
-        w = 8
-        h = 11
-        objp=np.zeros((w*h, 3), np.float32)
-        objp[:, :2]=np.mgrid[0:w, 0:h].T.reshape(-1, 2)
+
+        objp=np.zeros((8*11, 3), np.float32)
+        objp[:, :2]=np.mgrid[0:8, 0:11].T.reshape(-1, 2)
         #store the world coord. and image coord. points
         objpoints=[]
         imgpoints=[]
@@ -102,7 +100,7 @@ class Main(QMainWindow, ui.Ui_MainWindow):
             img=cv.imread(fname)
             gray=cv.cvtColor(img, cv.COLOR_BGR2GRAY)
             #find the corner of checkboard
-            ret, corners=cv.findChessboardCorners(gray, (w,h), None)
+            ret, corners=cv.findChessboardCorners(gray, (8,11), None)
             #save the points as long as find enough pair points
             if ret==True:
                 cv.cornerSubPix(gray,corners,(11,11),(-1,-1),criteria)
@@ -118,10 +116,8 @@ class Main(QMainWindow, ui.Ui_MainWindow):
     
     def Distortion(self):
         criteria = (cv.TERM_CRITERIA_EPS + cv.TERM_CRITERIA_MAX_ITER, 30, 0.001)
-        w = 8
-        h = 11
-        objp=np.zeros((w*h, 3), np.float32)
-        objp[:, :2]=np.mgrid[0:w, 0:h].T.reshape(-1, 2)
+        objp=np.zeros((8*11, 3), np.float32)
+        objp[:, :2]=np.mgrid[0:8, 0:11].T.reshape(-1, 2)
         #store the world coord. and image coord. points
         objpoints=[]
         imgpoints=[]
@@ -132,7 +128,7 @@ class Main(QMainWindow, ui.Ui_MainWindow):
             img=cv.imread(fname)
             gray=cv.cvtColor(img, cv.COLOR_BGR2GRAY)
             #find the corner of checkboard
-            ret, corners=cv.findChessboardCorners(gray, (w,h), None)
+            ret, corners=cv.findChessboardCorners(gray, (8,11), None)
             #save the points as long as find enough pair points
             if ret==True:
                 cv.cornerSubPix(gray,corners,(11,11),(-1,-1),criteria)
@@ -145,10 +141,8 @@ class Main(QMainWindow, ui.Ui_MainWindow):
     
     def Show_result(self):
         criteria = (cv.TERM_CRITERIA_EPS + cv.TERM_CRITERIA_MAX_ITER, 30, 0.001)
-        w = 8
-        h = 11
-        objp=np.zeros((w*h, 3), np.float32)
-        objp[:, :2]=np.mgrid[0:w, 0:h].T.reshape(-1, 2)
+        objp=np.zeros((8*11, 3), np.float32)
+        objp[:, :2]=np.mgrid[0:8, 0:11].T.reshape(-1, 2)
         #store the world coord. and image coord. points
         objpoints=[]
         imgpoints=[]
@@ -159,7 +153,7 @@ class Main(QMainWindow, ui.Ui_MainWindow):
             img_resize = cv.resize(img, (800, 800), interpolation=cv.INTER_AREA)
             gray=cv.cvtColor(img_resize, cv.COLOR_BGR2GRAY)
             #find the corner of checkboard
-            ret, corners=cv.findChessboardCorners(gray, (w,h), None)
+            ret, corners=cv.findChessboardCorners(gray, (8,11), None)
             #save the points as long as find enough pair points
             if ret==True:
                 cv.cornerSubPix(gray,corners,(11,11),(-1,-1),criteria)
@@ -169,16 +163,16 @@ class Main(QMainWindow, ui.Ui_MainWindow):
         ret, mtx, dist, rvecs, tvecs = cv.calibrateCamera(objpoints, imgpoints, gray.shape[::-1], None, None)
         for fname in images:
             img_test = cv.imread(fname)
-            img_test = cv.resize(img_test, (800, 800), interpolation=cv.INTER_AREA)
+            img_test = cv.resize(img_test, (815, 815), interpolation=cv.INTER_AREA)
             img_original = cv.imread(fname)
-            img_original = cv.resize(img_original, (800, 800), interpolation=cv.INTER_AREA)
+            img_original = cv.resize(img_original, (800,800), interpolation=cv.INTER_AREA)
             h,  w = img_test.shape[:2]
             newcameramtx, roi = cv.getOptimalNewCameraMatrix(mtx, dist, (w,h), 1, (w,h))
             img_result = cv.undistort(img_test, mtx, dist, None, newcameramtx)
             x, y, w, h = roi
             img_result = img_result[y:y+h, x:x+w]
-            cv.imshow('undistort', img_result)
-            cv.imshow('origin', img_original)
+            Hori = np.concatenate((img_result, img_original), axis=1)
+            cv.imshow("undistort", Hori)
             cv.waitKey(500)
         
 if __name__ == '__main__':
